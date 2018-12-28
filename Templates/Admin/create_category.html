@@ -1,12 +1,13 @@
 <html>
    <body>
-      <form action = "/create_categories" method = "POST">
+   <div style="margin:150px;padding:15px;background-color: lightgrey;text-align: center;">
+      <form action = "{{url_for('create_category')}}" method = "POST">
          <h3>Create Category</h3>
-         Name<br>
+         <label>Name:</label>
          <input type = "text" name = "name" /></br>
-         Description<br>
+         <label>Description:</label>
          <textarea name = "desc" ></textarea><br>
-         Status<br>
+         <label>Status:</label>
          <select name="status">
             <option value="">Select Status</option>
             <option value="1">Enabled</option>
@@ -14,5 +15,6 @@
          </select><br>
          <input type = "submit" value = "submit" /><br>
       </form>
+   </div>
    </body>
 </html>
