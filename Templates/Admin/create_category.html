@@ -1,20 +1,71 @@
-<html>
-   <body>
-   <div style="margin:150px;padding:15px;background-color: lightgrey;text-align: center;">
-      <form action = "{{url_for('create_category')}}" method = "POST">
-         <h3>Create Category</h3>
-         <label>Name:</label>
-         <input type = "text" name = "name" /></br>
-         <label>Description:</label>
-         <textarea name = "desc" ></textarea><br>
-         <label>Status:</label>
-         <select name="status">
-            <option value="">Select Status</option>
-            <option value="1">Enabled</option>
-            <option value="0">Disabled</option>
-         </select><br>
-         <input type = "submit" value = "submit" /><br>
-      </form>
-   </div>
-   </body>
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>SB Admin - Login</title>
+
+    <!-- Bootstrap core CSS-->
+    <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom fonts for this template-->
+    <link href="/static/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+
+    <!-- Custom styles for this template-->
+    <link href="/static/sb-admin.css" rel="stylesheet">
+
+  </head>
+
+  <body class="bg-dark">
+    <div class="container">
+      <div class="card card-login mx-auto mt-5">
+        {% if error %}
+          <p><strong>Error:</strong> {{ error }}
+        {% endif %}
+        <div class="card-header">Create Category</div>
+        <div class="card-body">
+          <form action="{{url_for('create_category')}}" method="post">
+            <div class="form-group">
+              <div class="form-label-group">
+                <input type="text" name="name" id="inputName" class="form-control" placeholder="Category Name" required="required" autofocus="autofocus">
+                <label for="inputName">Name</label>
+              </div>
+            </div>
+             <div class="form-group">
+              <div class="form-label-group">
+                 <textarea name="desc" id="inputDesc" class="form-control" placeholder="Category Description" required="required" autofocus="autofocus"></textarea>
+                <!--<label for="inputDesc">Description</label>-->
+              </div>
+            </div>
+             <div class="form-group">
+              <div class="form-label-group">
+                  <select name="status" id="status" class="form-control">
+                     <option value="">Select Status</option>
+                     <option value="1">Enabled</option>
+                     <option value="0">Disabled</option>
+                  </select>
+                 <!--<label for="status">Status</label>-->
+              </div>
+            </div>
+            <input type="submit" class="btn btn-primary btn-block" value="Save">
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="/static/jquery/jquery.min.js"></script>
+    <script src="/static/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="/static/jquery-easing/jquery.easing.min.js"></script>
+
+  </body>
+
 </html>

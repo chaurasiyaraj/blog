@@ -1,31 +1,84 @@
-<html>
-   <body>
-      <div style="margin:150px;padding:15px;background-color: lightgrey;text-align: center;">
-          <form action = "/create_post" method = "POST">
-             <h3>Create Post</h3>
-              <label>Title:</label>
-             <input type = "text" name = "title" /></br>
+<!DOCTYPE html>
+<html lang="en">
 
-             <label>Body:</label>
-             <textarea name = "body" ></textarea><br>
-              <label>Status:</label>
-              <select name="status">
-                  <option value="">Select Status</option>
-                  <option value="1">Enabled</option>
-                  <option value="0">Disabled</option>
-              </select><br>
-              <label>Categories:</label>
-              <select name="category_id">
-                  <option value="">Select Category</option>
-                  <option value="1">Cat1</option>
-                  <option value="2">Cat2</option>
-                  <option value="3">Cat2</option>
-                  <option value="4">Cat2</option>
-                  <option value="5">Cat2</option>
-              </select><br>
+  <head>
 
-              <input type = "submit" value = "submit" /><br>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>SB Admin - Login</title>
+
+    <!-- Bootstrap core CSS-->
+    <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom fonts for this template-->
+    <link href="/static/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+
+    <!-- Custom styles for this template-->
+    <link href="/static/sb-admin.css" rel="stylesheet">
+
+  </head>
+
+  <body class="bg-dark">
+    <div class="container">
+      <div class="card card-login mx-auto mt-5">
+        {% if error %}
+          <p><strong>Error:</strong> {{ error }}
+        {% endif %}
+        <div class="card-header">Create Post</div>
+        <div class="card-body">
+          <form action="{{url_for('create_post')}}" method="post">
+            <div class="form-group">
+              <div class="form-label-group">
+                <input type="text" name="title" id="inputName" class="form-control" placeholder="Post Title" required="required" autofocus="autofocus">
+                <label for="inputName">Title</label>
+              </div>
+            </div>
+             <div class="form-group">
+              <div class="form-label-group">
+                 <textarea name="body" id="inputBody" class="form-control" placeholder="Post Body" required="required" autofocus="autofocus"></textarea>
+                <!--<label for="inputDesc">Description</label>-->
+              </div>
+            </div>
+             <div class="form-group">
+              <div class="form-label-group">
+                  <select name="category_id" id="category_id" class="form-control">
+                     <option value="">Select Category</option>
+                      <option value="1">Cat1</option>
+                      <option value="2">Cat2</option>
+                      <option value="3">Cat2</option>
+                      <option value="4">Cat2</option>
+                      <option value="5">Cat2</option>
+                  </select>
+                 <!--<label for="status">Status</label>-->
+              </div>
+            </div>
+              <div class="form-group">
+              <div class="form-label-group">
+                  <select name="status" id="status" class="form-control">
+                     <option value="">Select Status</option>
+                     <option value="1">Enabled</option>
+                     <option value="0">Disabled</option>
+                  </select>
+                 <!--<label for="status">Status</label>-->
+              </div>
+            </div>
+            <input type="submit" class="btn btn-primary btn-block" value="Save">
           </form>
+        </div>
       </div>
-   </body>
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="/static/jquery/jquery.min.js"></script>
+    <script src="/static/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="/static/jquery-easing/jquery.easing.min.js"></script>
+
+  </body>
+
 </html>

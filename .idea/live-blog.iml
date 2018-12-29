@@ -11,6 +11,8 @@
     <orderEntry type="module" module-name="blog" />
     <orderEntry type="module" module-name="startbootstrap-sb-admin-gh-pages" />
     <orderEntry type="module" module-name="blog" />
+    <orderEntry type="module" module-name="blog" />
+    <orderEntry type="module" module-name="blog" />
   </component>
   <component name="TestRunnerService">
     <option name="PROJECT_TEST_RUNNER" value="Unittests" />

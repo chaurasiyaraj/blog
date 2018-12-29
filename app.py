@@ -15,8 +15,8 @@ Migrate(app, db)
 
 @app.route('/')
 def home():
-    conn = sqlite3.connect('database.db')
-    print("Opened database successfully")
+    #conn = sqlite3.connect('database.db')
+    #print("Opened database successfully")
     return render_template('Blog/index.html')
 
 @app.route('/admin')
@@ -26,27 +26,23 @@ def index():
 
 @app.route('/login', methods=['POST', 'GET'])
 def login():
+    error = None
     if request.method == 'POST':
-
-        # Add an user
-        user = User(email="om@gmail.com", password='abcd')
-        db.session.add(user)
-        db.session.commit()
-        print("Added user: ")
-
-        # Get all user
-        users = db.session.query(User).all()
-        for user in users:
-            print(user.email)
-            print(user.password)
-            print("==============")
-
-        # Filter on the basis of email.
-        user = db.session.query(User).filter_by(email='om@gmail.com').first()
-        print("Filtered on the basis of user email, and password is: {}".format(user.password))
-
+        email = request.form['email']
+        password = request.form['password']
+        # Filter on the basis of email and password.
+        user = db.session.query(User).filter_by(email=email, password=password).first()
+        print (user)
+        if hasattr(user, 'email'):
+            session['logged_in'] = 1
+            flash('You have logged In successfully')
+            return redirect(url_for('dashboard'))
+        else:
+            error = 'Invalid Email/Password!'
+    elif 'logged_in' in session:
+        flash('You are already logged In')
         return redirect(url_for('dashboard'))
-    return render_template('Admin/login.html')
+    return render_template('Admin/login.html', error=error)
 
 @app.route('/dashboard')
 def dashboard():
@@ -57,13 +53,20 @@ def categories():
     categories={}
     return render_template('Admin/categories.html', categories=categories)
 
-@app.route('/create_category')
+@app.route('/create_category', methods = ['POST', 'GET'])
 def create_category():
     if request.method == 'POST':
+        # Add a category
+        name = request.form['name']
+        description = request.form['description']
+        status = request.form['status']
+        category = Category(name=name, description=description, status=status)
+        db.session.add(category)
+        db.session.commit()
         return redirect(url_for('categories'))
     return render_template('Admin/create_category.html')
 
-@app.route('/edit_category')
+@app.route('/edit_category', methods=['POST', 'GET'])
 def edit_category():
     if request.method == 'POST':
         return redirect(url_for('categories'))
@@ -74,13 +77,20 @@ def posts():
     posts={}
     return render_template('Admin/posts.html', posts=posts)
 
-@app.route('/create_post')
+@app.route('/create_post', methods=['POST', 'GET'])
 def create_post():
     if request.method == 'POST':
+        # Add a category
+        name = request.form['name']
+        description = request.form['description']
+        status = request.form['status']
+        category = Category(name=name, description=description, status=status)
+        db.session.add(category)
+        db.session.commit()
         return redirect(url_for('posts'))
     return render_template('Admin/create_post.html')
 
-@app.route('/edit_post')
+@app.route('/edit_post', methods=['POST', 'GET'])
 def edit_post():
     if request.method == 'POST':
         return redirect(url_for('posts'))
@@ -89,6 +99,7 @@ def edit_post():
 
 @app.route('/logout')
 def logout():
+    session.pop('logged_in', None)
     return redirect(url_for('login'))
 
 
@@ -96,8 +107,34 @@ class User(db.Model):
     """
     Model to save the User.
     """
-    __tablename__ = 'user'
+    __tablename__ = 'users'
 
     id = db.Column('id', db.Integer, nullable=False, primary_key=True)
+    name = db.Column('name', db.String, nullable=False)
     email = db.Column('email', db.String, nullable=False)
     password = db.Column('password', db.String, nullable=False)
+    role = db.Column('role', db.Integer, nullable=False)
+    status = db.Column('status', db.String, nullable=False)
+
+class Category(db.Model):
+    """
+    Model to save the Category.
+    """
+    __tablename__ = 'category'
+
+    id = db.Column('id', db.Integer, nullable=False, primary_key=True)
+    name = db.Column('name', db.String, nullable=False)
+    email = db.Column('description', db.String, nullable=False)
+    status = db.Column('status', db.Integer, nullable=False)
+
+class Post(db.Model):
+    """
+    Model to save the Post.
+    """
+    __tablename__ = 'posts'
+
+    id = db.Column('id', db.Integer, nullable=False, primary_key=True)
+    name = db.Column('title', db.String, nullable=False)
+    email = db.Column('body', db.String, nullable=False)
+    category_id = db.Column('category_id', db.Integer, nullable=False)
+    status = db.Column('status', db.Integer, nullable=False)
